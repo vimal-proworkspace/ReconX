@@ -1,13 +1,12 @@
 # ReconX
 
 ![Python](https://img.shields.io/badge/Python-3.8%2B-blue?logo=python&logoColor=white)
-![Platform](https://img.shields.io/badge/Platform-Kali%20%7C%20Ubuntu%20%7C%20Windows-lightgrey)
-![License](https://img.shields.io/badge/License-MIT-green)
-![Status](https://img.shields.io/badge/Status-Learning%20Project-orange)
+![Tested on](https://img.shields.io/badge/Tested%20on-Kali%20Linux-557C94?logo=kalilinux&logoColor=white)
+![Status](https://img.shields.io/badge/Status-Learning%20Project%20%7C%20Actively%20Maintained-orange)
 
 A modular Python toolkit that runs DNS, TLS, web-header and network checks against a target, then produces JSON and HTML reports with severity, confidence, evidence and fix recommendations. It also includes a small Flask dashboard.
 
-**This is my second cybersecurity project**, and the successor to [AutoRecon](https://github.com/<your-username>/autorecon). Where AutoRecon was a single script, ReconX is split into modules that share one finding format. It is still a learning project, not a full vulnerability scanner.
+**This is my second cybersecurity project, and I'm actively improving it.** It is the successor to [AutoRecon](https://github.com/vimal-proworkspace/Auto-recon-). Where AutoRecon was a single script, ReconX is split into modules that share one finding format. It is a learning project that I keep maintaining, not a full vulnerability scanner.
 
 ---
 
@@ -42,9 +41,23 @@ Do not point automated tools at the public Juice Shop demo; it is not meant for 
 
 ---
 
+## Project status
+
+ReconX is both a **learning project** and an **actively maintained project**. It is small and limited by design, and I'm improving it step by step (see the roadmap below).
+
+---
+
+## Testing
+
+- **Platform:** I developed and tested ReconX on **Kali Linux**. I have not tested it on Windows, Ubuntu or macOS, so I can't promise it works there.
+- **Manual testing:** I ran the web module from the terminal on Kali (see the screenshot below).
+- **Automated tests:** The repo includes a unit test suite (see [Running the tests](#running-the-tests)).
+
+---
+
 ## Screenshots
 
-The web module running from the terminal:
+The web module running from the terminal on Kali Linux:
 
 ![ReconX web module output](images/ReconX_web_module_output.png)
 
@@ -52,10 +65,12 @@ The web module running from the terminal:
 
 ## Getting started
 
+You'll need Python 3.8+ and pip. I haven't tested other Python versions, so 3.8 is the minimum I'm documenting for now.
+
 **1. Clone the repo**
 
 ```bash
-git clone https://github.com/<your-username>/reconx.git
+git clone https://github.com/vimal-proworkspace/reconx.git
 cd reconx
 ```
 
@@ -71,6 +86,8 @@ source venv/bin/activate
 ```bash
 pip install -r requirements.txt
 ```
+
+The external libraries used are `dnspython`, `requests` and `Flask`.
 
 **4. (Optional) Start a local Juice Shop lab**
 
@@ -117,7 +134,9 @@ Open `http://127.0.0.1:5000`, enter a target, tick the authorization box and cho
 
 ---
 
-## Sample finding
+## Example finding
+
+This is an example of a single finding as it appears in the JSON report. Your results will differ depending on the target:
 
 ```json
 {
@@ -132,11 +151,11 @@ Open `http://127.0.0.1:5000`, enter a target, tick the authorization box and cho
 }
 ```
 
-A missing header is a potential misconfiguration, not proof of an exploitable vulnerability.
+**A finding is a potential issue to review, not proof of a vulnerability.** A missing header or an open port does not necessarily mean the target is exploitable. Whether it matters depends on the application, its configuration and its purpose, and ReconX does not confirm exploitability.
 
 ---
 
-## Tests
+## Running the tests
 
 ```bash
 python3 -m unittest discover -s tests -t . -v
@@ -171,15 +190,12 @@ reconx/
 │   ├── __init__.py
 │   └── test_reconx.py
 ├── images/
-│   ├── ReconX_web_module_output.png
-│   ├── AutoRecon_repo_structure.png
-│   └── AutoRecon_image_naming.png
-├── reports/
+│   └── ReconX_web_module_output.png
 ├── requirements.txt
-├── .gitignore
-├── LICENSE
 └── README.md
 ```
+
+The `reports/` folder is created when you run a scan.
 
 ---
 
@@ -200,12 +216,15 @@ reconx/
 - Web checks cover one URL and do not follow redirects or crawl
 - TLS check reports the negotiated protocol, not every supported one
 - Findings are potential issues to review, not a penetration test
+- It has only been tested on Kali Linux
 
 For real assessments, use mature tools such as [Nmap](https://nmap.org/) and [OWASP ZAP](https://www.zaproxy.org/).
 
 ---
 
-## What I want to build next
+## Roadmap
+
+Planned features. Nothing below is implemented yet, so nothing is checked off:
 
 - [ ] Compare results against OWASP ZAP on my local Juice Shop
 - [ ] Crawl and check multiple pages
@@ -213,21 +232,22 @@ For real assessments, use mature tools such as [Nmap](https://nmap.org/) and [OW
 - [ ] Service banner identification
 - [ ] PDF export
 - [ ] Scan history in the dashboard
+- [ ] Add a `LICENSE` file
 
 ---
 
 ## About me
 
-I'm **Your Name**, learning cybersecurity and building projects to understand how things really work.
+I'm **Vimal**, learning cybersecurity and building projects to understand how things really work.
 
-- GitHub: [@your-username](https://github.com/your-username)
-- LinkedIn: [your-profile](https://linkedin.com/in/your-profile)
+- GitHub: [@vimal-proworkspace](https://github.com/vimal-proworkspace)
+- LinkedIn: [vimal-annadurai](https://www.linkedin.com/in/vimal-annadurai/)
 
 ---
 
 ## License
 
-MIT License. See the `LICENSE` file.
+This repository does not include a license file yet. I plan to add the MIT License, and I'll update this section once the `LICENSE` file is in the repo. Until then, default copyright applies.
 
 ## Thanks to
 
