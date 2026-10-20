@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>ReconX Report - {{ a.host }}</title>
+<style>
+  body{font-family:system-ui,sans-serif;max-width:980px;margin:2rem auto;padding:0 1rem;color:#1b1f24;background:#f6f8fa}
+  h1{margin-bottom:.2rem} .meta{color:#57606a}
+  .counts{display:flex;gap:.6rem;margin:1rem 0}
+  .counts div{flex:1;padding:.7rem;border-radius:8px;text-align:center;color:#fff;font-weight:600}
+  .high{background:#cf222e}.medium{background:#bc4c00}.low{background:#9a6700}.info{background:#0969da}
+  .card{background:#fff;border:1px solid #d0d7de;border-radius:8px;padding:1rem;margin:.8rem 0}
+  .badge{color:#fff;border-radius:4px;padding:.1rem .5rem;font-size:.8rem;text-transform:uppercase}
+  dt{font-weight:600;margin-top:.5rem} dd{margin:0}
+  code{background:#eaeef2;padding:.1rem .3rem;border-radius:4px}
+  .note{background:#fff8c5;border:1px solid #d4a72c;border-radius:8px;padding:.7rem}
+</style>
+</head>
+<body>
+<h1>ReconX Assessment Report</h1>
+<p class="meta">Target: <code>{{ a.target }}</code> &middot; Generated {{ generated }}</p>
+
+<div class="counts">
+{% for sev, n in counts.items() %}<div class="{{ sev }}">{{ n }}<br>{{ sev|capitalize }}</div>{% endfor %}
+</div>
+
+<h2>Findings ({{ findings|length }})</h2>
+{% for f in findings %}
+<div class="card">
+  <span class="badge {{ f.severity }}">{{ f.severity }}</span>
+  <strong>{{ f.title }}</strong> <small>[{{ f.module }} &middot; confidence: {{ f.confidence }}]</small>
+  <dl>
+    <dt>Location</dt><dd><code>{{ f.location }}</code></dd>
+    <dt>Evidence</dt><dd>{{ f.evidence }}</dd>
+    <dt>Impact</dt><dd>{{ f.impact }}</dd>
+    <dt>Recommendation</dt><dd>{{ f.recommendation }}</dd>
+  </dl>
+</div>
+{% else %}<p>No findings from the modules that ran.</p>{% endfor %}
+
+{% if a.errors %}<h2>Skipped / failed modules</h2>
+<ul>{% for m, e in a.errors.items() %}<li><strong>{{ m }}</strong>: {{ e }}</li>{% endfor %}</ul>{% endif %}
+
+{% for r in a.results %}{% if r.module == 'network' %}
+<h2>Open ports</h2>
+<ul>{% for p in r.open_ports %}<li>{{ p.port }}/tcp &mdash; {{ p.service }}</li>{% else %}<li>None found</li>{% endfor %}</ul>
+{% endif %}{% endfor %}
+
+<p class="note"><strong>Limitations:</strong> automated checks only; findings are potential
+misconfigurations to review, not confirmed exploitable vulnerabilities. This is not a penetration test.</p>
+</body>
+</html>

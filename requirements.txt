@@ -1,0 +1,4 @@
+requests>=2.31
+dnspython>=2.4
+flask>=3.0
+jinja2>=3.1
